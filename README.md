@@ -4,10 +4,26 @@ The WooCommerce MCP Server is a [Model Context Protocol (MCP)](https://modelcont
 
 ## Features
 
-- Automate WooCommerce store management via MCP tools
-- Expose product, order, category, tag, and report operations
-- Integrate with AI agents for e-commerce workflows
-- Easily extensible and configurable
+- **Product management:**
+  - Create, update, delete, and retrieve products
+  - List all products
+  - Get product by ID
+  - Manage product tags and categories (get, update, delete)
+- **Category management:**
+  - Create new categories
+  - Retrieve categories for a product
+- **Tag management:**
+  - Create, update, delete, and retrieve product tags
+  - List all product tags
+  - Batch update product tags
+- **Order management:**
+  - Create, update, delete, and retrieve orders
+  - List all orders
+  - Batch update orders
+- **Reports and analytics:**
+  - List all available reports
+  - Retrieve sales, top sellers, customers, orders, products, and reviews totals
+  - Retrieve sales and top sellers reports (with filters)
 
 ## Prerequisites
 
@@ -18,12 +34,30 @@ The WooCommerce MCP Server is a [Model Context Protocol (MCP)](https://modelcont
 
 ## Installation
 
+### Using Docker (Recommended)
+
 1. **Clone the repository:**
    ```bash
    git clone <your-repo-url>
    cd woocommerce-mcp
    ```
-2. **Install dependencies:**
+2. **Build the Docker image:**
+   ```bash
+   docker build -t woocommerce-mcp .
+   ```
+   This will create a Docker image named `woocommerce-mcp`.
+   You can verify the image was built successfully by running:
+   ```bash
+   docker images | grep woocommerce-mcp
+   ```
+
+You can now run the image directly with `docker run` or use it with Docker Compose as described below.
+
+---
+
+### Alternative: Local Python Environment (For development/advanced users)
+
+1. **Install dependencies:**
    ```bash
    pip install -r requirement.txt
    ```
@@ -91,4 +125,34 @@ This project is licensed under the terms of the MIT open source license. See [LI
 ## Acknowledgments
 
 - Inspired by the [Model Context Protocol](https://modelcontextprotocol.io/)
-- Built with [woocommerce](https://pypi.org/project/woocommerce/) and [mcp-server](https://pypi.org/project/mcp-server/) 
+- Built with [woocommerce](https://pypi.org/project/woocommerce/) and [mcp-server](https://pypi.org/project/mcp-server/)
+
+## Example: Using with MCP Client and Docker
+
+To use your WooCommerce MCP server with an MCP client via Docker and stdio, add the following to your `mcp.json` configuration:
+
+```json
+"woocommerce-docker": {
+  "command": "docker",
+  "args": [
+    "run",
+    "-i",
+    "--rm",
+    "-e",
+    "WOOCOMMERCE_URL",
+    "-e",
+    "WOOCOMMERCE_CONSUMER_KEY",
+    "-e",
+    "WOOCOMMERCE_CONSUMER_SECRET",
+    "woocommerce-mcp"
+  ],
+  "env": {
+    "WOOCOMMERCE_URL": "https://yourstore.com",
+    "WOOCOMMERCE_CONSUMER_KEY": "ck_your_consumer_key",
+    "WOOCOMMERCE_CONSUMER_SECRET": "cs_your_consumer_secret"
+  }
+}
+```
+
+- Replace the values with your actual WooCommerce credentials and URL.
+- This configuration will launch the Docker container and connect to the MCP server over stdio, with no need to expose a port. 
