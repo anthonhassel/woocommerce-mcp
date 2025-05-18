@@ -59,13 +59,13 @@ You can now run the image directly with `docker run` or use it with Docker Compo
 
 1. **Install dependencies:**
    ```bash
-   pip install -r requirement.txt
+   pip install -r requirements.txt
    ```
    Or use a virtual environment:
    ```bash
    python -m venv .venv
    source .venv/bin/activate
-   pip install -r requirement.txt
+   pip install -r requirements.txt
    ```
 
 ## Configuration
