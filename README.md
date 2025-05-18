@@ -1,24 +1,6 @@
 # WooCommerce MCP Server
 
-## Quick Start
-
-1. Clone the repository:
-   ```bash
-   git clone <your-repo-url>
-   cd woocommerce-mcp
-   ```
-2. Build the Docker image:
-   ```bash
-   docker build -t woocommerce-mcp .
-   ```
-3. Start the test environment:
-   ```bash
-   cd infrastucture
-   docker-compose up
-   ```
-4. Access the WordPress test site at: [http://localhost:3000](http://localhost:3000)
-
-You can now experiment with the WooCommerce MCP server and WordPress in a local test environment.
+The WooCommerce MCP Server is a [Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction) server that exposes WooCommerce API operations as tools, enabling advanced automation and integration with AI agents and developer tools.
 
 ## Features
 

@@ -1,6 +1,0 @@
-yfinance>=0.2.36
-colorama>=0.4.6
-mcp-server>=0.1.0
-mcp[cli]
-woocommerce
-python-dotenv>=1.0.0
