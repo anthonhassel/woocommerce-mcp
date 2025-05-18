@@ -94,6 +94,8 @@ This will start the MCP server and register WooCommerce tools for use by compati
 
 You can deploy a test environment using the provided `docker-compose.yaml` file. This is useful if you want to experiment or run tests before connecting to a real WordPress website. The test environment simulates a WooCommerce store for development and testing purposes.
 
+The WordPress test environment will be available at http://localhost:3000 when running Docker Compose.
+
 A sample `docker-compose.yaml` is provided in the `infrastucture/` directory. To run with Docker Compose:
 
 ```bash
