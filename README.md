@@ -102,15 +102,147 @@ docker-compose up
 
 ## Available Tools
 
-The following WooCommerce operations are exposed as MCP tools:
+The following tools are available via the WooCommerce MCP server:
 
-- Product management: create, update, delete, list, get by ID
-- Product tags and categories: CRUD operations
-- Order management: create, update, delete, list, get by ID
-- Reports: sales, top sellers, coupons, customers, orders, products, reviews
-- Batch operations for orders and product tags
+1. `create_product`
+   - Create a new product in WooCommerce
+   - Inputs: `product` (dict): Product data
+   - Returns: Created product details
 
-See `server.py` for the full list of available tools and their parameters.
+2. `delete_product`
+   - Delete a product by its ID
+   - Inputs: `product_id` (int): Product ID
+   - Returns: Deletion result
+
+3. `get_products`
+   - List all products
+   - Inputs: None
+   - Returns: List of products
+
+4. `get_product_by_id`
+   - Get a product by its ID
+   - Inputs: `product_id` (int): Product ID
+   - Returns: Product details
+
+5. `update_product`
+   - Update a product by its ID
+   - Inputs: `product_id` (int): Product ID, `product` (dict): Product data
+   - Returns: Updated product details
+
+6. `get_product_tags`
+   - Retrieve tags for a product by its ID
+   - Inputs: `product_id` (int): Product ID
+   - Returns: List of tags
+
+7. `update_product_tag`
+   - Update a tag for a product by its ID
+   - Inputs: `product_id` (int): Product ID, `tag_id` (int): Tag ID, `tag` (dict): Tag data
+   - Returns: Updated tag details
+
+8. `get_product_categories`
+   - Retrieve categories for a product by its ID
+   - Inputs: `product_id` (int): Product ID
+   - Returns: List of categories
+
+9. `delete_product_tags`
+   - Delete a tag for a product by its ID
+   - Inputs: `tag_id` (int): Tag ID
+   - Returns: Deletion result
+
+10. `create_category`
+    - Create a new category
+    - Inputs: `category` (dict): Category data
+    - Returns: Created category details
+
+11. `list_all_reports`
+    - List all available reports
+    - Inputs: None
+    - Returns: List of reports
+
+12. `retrieve_sales_report`
+    - Retrieve sales report
+    - Inputs: None
+    - Returns: Sales report data
+
+13. `retrieve_top_sellers_report`
+    - Retrieve top sellers report (with optional filters)
+    - Inputs: `period` (str, optional), `date_min` (str, optional), `date_max` (str, optional)
+    - Returns: Top sellers report data
+
+14. `retrieve_customers_totals`
+    - Retrieve customers totals
+    - Inputs: None
+    - Returns: Customers totals data
+
+15. `retrieve_orders_totals`
+    - Retrieve orders totals
+    - Inputs: None
+    - Returns: Orders totals data
+
+16. `retrieve_products_totals`
+    - Retrieve products totals
+    - Inputs: None
+    - Returns: Products totals data
+
+17. `retrieve_reviews_totals`
+    - Retrieve reviews totals
+    - Inputs: None
+    - Returns: Reviews totals data
+
+18. `create_order`
+    - Create an order
+    - Inputs: `order` (dict): Order data
+    - Returns: Created order details
+
+19. `retrieve_order`
+    - Retrieve an order by its ID
+    - Inputs: `order_id` (int): Order ID
+    - Returns: Order details
+
+20. `list_all_orders`
+    - List all orders
+    - Inputs: None
+    - Returns: List of orders
+
+21. `update_order`
+    - Update an order by its ID
+    - Inputs: `order_id` (int): Order ID, `order` (dict): Order data
+    - Returns: Updated order details
+
+22. `delete_order`
+    - Delete an order by its ID
+    - Inputs: `order_id` (int): Order ID, `force` (bool, optional): Permanently delete
+    - Returns: Deletion result
+
+23. `batch_update_orders`
+    - Batch update orders
+    - Inputs: `orders` (dict): Orders batch data
+    - Returns: Batch update result
+
+24. `create_product_tag`
+    - Create a new product tag
+    - Inputs: `tag` (dict): Tag data
+    - Returns: Created tag details
+
+25. `get_product_tag_by_id`
+    - Retrieve a product tag by its ID
+    - Inputs: `tag_id` (int): Tag ID
+    - Returns: Tag details
+
+26. `list_all_product_tags`
+    - List all product tags
+    - Inputs: None
+    - Returns: List of product tags
+
+27. `update_product_tag_by_id`
+    - Update a product tag by its ID
+    - Inputs: `tag_id` (int): Tag ID, `tag` (dict): Tag data
+    - Returns: Updated tag details
+
+28. `batch_update_product_tags`
+    - Batch update product tags
+    - Inputs: `tags` (dict): Tags batch data
+    - Returns: Batch update result
 
 ## Development
 
