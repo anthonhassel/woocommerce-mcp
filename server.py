@@ -117,19 +117,21 @@ def retrieve_sales_report():
     return str(report.json())
 
 @mcp.tool()
-def retrieve_top_sellers_report():
+def retrieve_top_sellers_report(period: str = None, date_min: str = None, date_max: str = None):
     """
-    Retrieve top sellers report.
+    Retrieve top sellers report with optional period, date_min, and date_max filters.
+    period: week, month, last_month, year
+    date_min: YYYY-MM-DD
+    date_max: YYYY-MM-DD
     """
-    report = wcapi.get("reports/top_sellers")
-    return str(report.json())
-
-@mcp.tool()
-def retrieve_coupons_totals():
-    """
-    Retrieve coupons totals.
-    """
-    report = wcapi.get("reports/coupons/totals")
+    params = {}
+    if period:
+        params['period'] = period
+    if date_min:
+        params['date_min'] = date_min
+    if date_max:
+        params['date_max'] = date_max
+    report = wcapi.get("reports/top_sellers", params=params)
     return str(report.json())
 
 @mcp.tool()
@@ -168,6 +170,54 @@ def retrieve_reviews_totals():
 def create_order(order: dict):
     """
     Create an order in WooCommerce.
+
+    Example of the expected 'order' dictionary:
+
+        data = {
+            "payment_method": "bacs",
+            "payment_method_title": "Direct Bank Transfer",
+            "set_paid": True,
+            "billing": {
+                "first_name": "John",
+                "last_name": "Doe",
+                "address_1": "969 Market",
+                "address_2": "",
+                "city": "San Francisco",
+                "state": "CA",
+                "postcode": "94103",
+                "country": "US",
+                "email": "john.doe@example.com",
+                "phone": "(555) 555-5555"
+            },
+            "shipping": {
+                "first_name": "John",
+                "last_name": "Doe",
+                "address_1": "969 Market",
+                "address_2": "",
+                "city": "San Francisco",
+                "state": "CA",
+                "postcode": "94103",
+                "country": "US"
+            },
+            "line_items": [
+                {
+                    "product_id": 93,
+                    "quantity": 2
+                },
+                {
+                    "product_id": 22,
+                    "variation_id": 23,
+                    "quantity": 1
+                }
+            ],
+            "shipping_lines": [
+                {
+                    "method_id": "flat_rate",
+                    "method_title": "Flat Rate",
+                    "total": "10.00"
+                }
+            ]
+        }
     """
     response = wcapi.post("orders", order)
     return str(response.json())
@@ -251,6 +301,7 @@ def batch_update_product_tags(tags: dict):
     """
     response = wcapi.post("products/tags/batch", tags)
     return str(response.json())
+
 
 if __name__ == "__main__":
     mcp.run(transport="stdio")

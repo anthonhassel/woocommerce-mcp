@@ -90,7 +90,7 @@ python server.py
 
 This will start the MCP server and register WooCommerce tools for use by compatible AI agents or clients.
 
-### Docker Compose
+### Test Environment
 
 You can deploy a test environment using the provided `docker-compose.yaml` file. This is useful if you want to experiment or run tests before connecting to a real WordPress website. The test environment simulates a WooCommerce store for development and testing purposes.
 
