@@ -1,7 +1,7 @@
-from mcp.server.fastmcp import FastMCP
 import os
 import requests
 from woocommerce import API
+from mcp.server.fastmcp import FastMCP
 
 
 # Get environment variables
