@@ -1,7 +1,6 @@
-from mcp.server.fastmcp import FastMCP
 import os
-import requests
 from woocommerce import API
+from mcp.server.fastmcp import FastMCP
 
 
 # Get environment variables
@@ -20,6 +19,7 @@ wcapi = API(
     version="wc/v3",
 )
 
+
 @mcp.tool()
 def create_product(product: dict):
     """
@@ -27,6 +27,7 @@ def create_product(product: dict):
     """
     product = wcapi.post("products", product)
     return str(product.json())
+
 
 @mcp.tool()
 def delete_product(product_id: int):
@@ -36,13 +37,16 @@ def delete_product(product_id: int):
     product = wcapi.delete(f"products/{product_id}")
     return str(product.json())
 
+
 @mcp.tool()
-def get_products():
+def get_products(params: dict = None):
     """
-    List all products from Woocommerce
+    List all products from WooCommerce with optional query parameters.
+    :param params: Optional dictionary of query parameters (e.g., {'per_page': 20, 'page': 2, 'search': 'shirt'})
     """
-    products = wcapi.get("products")
+    products = wcapi.get("products", params=params or {})
     return str(products.json())
+
 
 @mcp.tool()
 def get_product_by_id(product_id: int):
@@ -52,6 +56,7 @@ def get_product_by_id(product_id: int):
     product = wcapi.get(f"products/{product_id}")
     return str(product.json())
 
+
 @mcp.tool()
 def update_product(product_id: int, product: dict):
     """
@@ -59,6 +64,7 @@ def update_product(product_id: int, product: dict):
     """
     product = wcapi.put(f"products/{product_id}", product)
     return str(product.json())
+
 
 @mcp.tool()
 def get_product_tags(product_id: int):
@@ -68,6 +74,7 @@ def get_product_tags(product_id: int):
     tags = wcapi.get(f"products/{product_id}/tags")
     return str(tags.json())
 
+
 @mcp.tool()
 def update_product_tag(product_id: int, tag_id: int, tag: dict):
     """
@@ -75,6 +82,7 @@ def update_product_tag(product_id: int, tag_id: int, tag: dict):
     """
     tag = wcapi.put(f"products/{product_id}/tags/{tag_id}", tag)
     return str(tag.json())
+
 
 @mcp.tool()
 def get_product_categories(product_id: int):
@@ -84,6 +92,7 @@ def get_product_categories(product_id: int):
     categories = wcapi.get(f"products/{product_id}/categories")
     return str(categories.json())
 
+
 @mcp.tool()
 def delete_product_tags(tag_id: int):
     """
@@ -91,6 +100,7 @@ def delete_product_tags(tag_id: int):
     """
     tag = wcapi.delete(f"products/tags/{tag_id}")
     return str(tag.json())
+
 
 @mcp.tool()
 def create_category(category: dict):
@@ -100,6 +110,7 @@ def create_category(category: dict):
     category = wcapi.post("products/categories", category)
     return str(category.json())
 
+
 @mcp.tool()
 def list_all_reports():
     """
@@ -108,6 +119,7 @@ def list_all_reports():
     reports = wcapi.get("reports")
     return str(reports.json())
 
+
 @mcp.tool()
 def retrieve_sales_report():
     """
@@ -115,6 +127,7 @@ def retrieve_sales_report():
     """
     report = wcapi.get("reports/sales")
     return str(report.json())
+
 
 @mcp.tool()
 def retrieve_top_sellers_report(period: str = None, date_min: str = None, date_max: str = None):
@@ -131,8 +144,11 @@ def retrieve_top_sellers_report(period: str = None, date_min: str = None, date_m
         params['date_min'] = date_min
     if date_max:
         params['date_max'] = date_max
-    report = wcapi.get("reports/top_sellers", params=params)
+    report = wcapi.get(
+        "reports/top_sellers", params=params
+    )
     return str(report.json())
+
 
 @mcp.tool()
 def retrieve_customers_totals():
@@ -142,6 +158,7 @@ def retrieve_customers_totals():
     report = wcapi.get("reports/customers/totals")
     return str(report.json())
 
+
 @mcp.tool()
 def retrieve_orders_totals():
     """
@@ -149,6 +166,7 @@ def retrieve_orders_totals():
     """
     report = wcapi.get("reports/orders/totals")
     return str(report.json())
+
 
 @mcp.tool()
 def retrieve_products_totals():
@@ -158,6 +176,7 @@ def retrieve_products_totals():
     report = wcapi.get("reports/products/totals")
     return str(report.json())
 
+
 @mcp.tool()
 def retrieve_reviews_totals():
     """
@@ -165,6 +184,7 @@ def retrieve_reviews_totals():
     """
     report = wcapi.get("reports/reviews/totals")
     return str(report.json())
+
 
 @mcp.tool()
 def create_order(order: dict):
@@ -174,6 +194,7 @@ def create_order(order: dict):
     response = wcapi.post("orders", order)
     return str(response.json())
 
+
 @mcp.tool()
 def retrieve_order(order_id: int):
     """
@@ -181,6 +202,7 @@ def retrieve_order(order_id: int):
     """
     response = wcapi.get(f"orders/{order_id}")
     return str(response.json())
+
 
 @mcp.tool()
 def list_all_orders():
@@ -190,6 +212,7 @@ def list_all_orders():
     response = wcapi.get("orders")
     return str(response.json())
 
+
 @mcp.tool()
 def update_order(order_id: int, order: dict):
     """
@@ -197,6 +220,7 @@ def update_order(order_id: int, order: dict):
     """
     response = wcapi.put(f"orders/{order_id}", order)
     return str(response.json())
+
 
 @mcp.tool()
 def delete_order(order_id: int, force: bool = True):
@@ -206,13 +230,6 @@ def delete_order(order_id: int, force: bool = True):
     response = wcapi.delete(f"orders/{order_id}", params={"force": force})
     return str(response.json())
 
-@mcp.tool()
-def batch_update_orders(orders: dict):
-    """
-    Batch update orders in WooCommerce. The orders dict should follow the WooCommerce batch update format.
-    """
-    response = wcapi.post("orders/batch", orders)
-    return str(response.json())
 
 @mcp.tool()
 def create_product_tag(tag: dict):
@@ -222,6 +239,7 @@ def create_product_tag(tag: dict):
     response = wcapi.post("products/tags", tag)
     return str(response.json())
 
+
 @mcp.tool()
 def get_product_tag_by_id(tag_id: int):
     """
@@ -229,6 +247,7 @@ def get_product_tag_by_id(tag_id: int):
     """
     response = wcapi.get(f"products/tags/{tag_id}")
     return str(response.json())
+
 
 @mcp.tool()
 def list_all_product_tags():
@@ -238,20 +257,13 @@ def list_all_product_tags():
     response = wcapi.get("products/tags")
     return str(response.json())
 
+
 @mcp.tool()
 def update_product_tag_by_id(tag_id: int, tag: dict):
     """
     Update a product tag by its ID.
     """
     response = wcapi.put(f"products/tags/{tag_id}", tag)
-    return str(response.json())
-
-@mcp.tool()
-def batch_update_product_tags(tags: dict):
-    """
-    Batch update product tags in WooCommerce. The tags dict should follow the WooCommerce batch update format.
-    """
-    response = wcapi.post("products/tags/batch", tags)
     return str(response.json())
 
 

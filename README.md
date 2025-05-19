@@ -2,6 +2,36 @@
 
 The WooCommerce MCP Server is a [Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction) server that exposes WooCommerce API operations as tools, enabling advanced automation and integration with AI agents and developer tools.
 
+## Example: Using with MCP Client and Docker
+
+To use your WooCommerce MCP server with an MCP client via Docker and stdio, add the following to your `mcp.json` configuration:
+
+```json
+"woocommerce-docker": {
+  "command": "docker",
+  "args": [
+    "run",
+    "-i",
+    "--rm",
+    "-e",
+    "WOOCOMMERCE_URL",
+    "-e",
+    "WOOCOMMERCE_CONSUMER_KEY",
+    "-e",
+    "WOOCOMMERCE_CONSUMER_SECRET",
+    "woocommerce-mcp"
+  ],
+  "env": {
+    "WOOCOMMERCE_URL": "https://yourstore.com",
+    "WOOCOMMERCE_CONSUMER_KEY": "ck_your_consumer_key",
+    "WOOCOMMERCE_CONSUMER_SECRET": "cs_your_consumer_secret"
+  }
+}
+```
+
+- Replace the values with your actual WooCommerce credentials and URL.
+- This configuration will launch the Docker container and connect to the MCP server over stdio, with no need to expose a port.
+
 ## Features
 
 - **Product management:**
@@ -260,34 +290,4 @@ This project is licensed under the terms of the MIT open source license. See [LI
 ## Acknowledgments
 
 - Inspired by the [Model Context Protocol](https://modelcontextprotocol.io/)
-- Built with [woocommerce](https://pypi.org/project/woocommerce/) and [mcp-server](https://pypi.org/project/mcp-server/)
-
-## Example: Using with MCP Client and Docker
-
-To use your WooCommerce MCP server with an MCP client via Docker and stdio, add the following to your `mcp.json` configuration:
-
-```json
-"woocommerce-docker": {
-  "command": "docker",
-  "args": [
-    "run",
-    "-i",
-    "--rm",
-    "-e",
-    "WOOCOMMERCE_URL",
-    "-e",
-    "WOOCOMMERCE_CONSUMER_KEY",
-    "-e",
-    "WOOCOMMERCE_CONSUMER_SECRET",
-    "woocommerce-mcp"
-  ],
-  "env": {
-    "WOOCOMMERCE_URL": "https://yourstore.com",
-    "WOOCOMMERCE_CONSUMER_KEY": "ck_your_consumer_key",
-    "WOOCOMMERCE_CONSUMER_SECRET": "cs_your_consumer_secret"
-  }
-}
-```
-
-- Replace the values with your actual WooCommerce credentials and URL.
-- This configuration will launch the Docker container and connect to the MCP server over stdio, with no need to expose a port. 
+- Built with [woocommerce](https://pypi.org/project/woocommerce/) and [mcp-server](https://pypi.org/project/mcp-server/) 
