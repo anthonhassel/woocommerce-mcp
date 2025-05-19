@@ -1,10 +1,37 @@
 # WooCommerce MCP Server
 
-The WooCommerce MCP Server is a [Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction) server that exposes WooCommerce API operations as tools, enabling advanced automation and integration with AI agents and developer tools.
+## Overview
+What is WooCommerce MCP Server?
 
-## Example: Using with MCP Client and Docker
+WooCommerce MCP Server is a tool for managing WooCommerce stores, enabling product, order, and report operations, search functionality, and integration with the WooCommerce REST API for seamless e-commerce management and automation.
 
-To use your WooCommerce MCP server with an MCP client via Docker and stdio, add the following to your `mcp.json` configuration:
+## How to use WooCommerce MCP Server?
+To use this server, set up your WooCommerce API credentials (Consumer Key and Consumer Secret) and integrate them into your application, enabling you to perform various store management tasks through API calls.
+
+## Requirements
+
+- Python 3.8+
+- Docker (for containerized usage)
+- WooCommerce store with API access
+- WooCommerce REST API credentials (URL, Consumer Key, Consumer Secret)
+
+## Server Config
+
+You can easily run the WooCommerce MCP Server using Docker and connect it to an MCP client. Follow these steps:
+
+### 1. Clone the repository
+```bash
+git clone <your-repo-url>
+cd woocommerce-mcp
+```
+
+### 2. Build the Docker image
+```bash
+docker build -t woocommerce-mcp .
+```
+
+### 3. Add Docker configuration to your `mcp.json`
+Add the following entry to your `mcp.json` configuration file to enable the MCP client to launch the server via Docker:
 
 ```json
 "woocommerce-docker": {
@@ -28,266 +55,38 @@ To use your WooCommerce MCP server with an MCP client via Docker and stdio, add 
   }
 }
 ```
-
 - Replace the values with your actual WooCommerce credentials and URL.
-- This configuration will launch the Docker container and connect to the MCP server over stdio, with no need to expose a port.
+- This configuration will launch the Docker container and connect to the MCP server
 
-## Features
+### 4. Run with MCP client
+Now, when you use your MCP client, it will automatically start the WooCommerce MCP Server in Docker using the configuration above.
 
-- **Product management:**
-  - Create, update, delete, and retrieve products
-  - List all products
-  - Get product by ID
-  - Manage product tags and categories (get, update, delete)
-- **Category management:**
-  - Create new categories
-  - Retrieve categories for a product
-- **Tag management:**
-  - Create, update, delete, and retrieve product tags
-  - List all product tags
-  - Batch update product tags
-- **Order management:**
-  - Create, update, delete, and retrieve orders
-  - List all orders
-  - Batch update orders
-- **Reports and analytics:**
-  - List all available reports
-  - Retrieve sales, top sellers, customers, orders, products, and reviews totals
-  - Retrieve sales and top sellers reports (with filters)
+## Key features of WooCommerce MCP Server
+- Product management: create, update, delete, and list products
+- Order management: create, update, delete, and list orders
+- Category and tag management for products
+- Comprehensive error handling with clear messages
+- Support for batch operations
+- Advanced search and filtering capabilities for products and orders
+- Access to WooCommerce reports and analytics
 
-## Prerequisites
+## Use cases of WooCommerce MCP Server
+- Automating the creation and management of store products and orders
+- Enabling advanced search and reporting functionalities for WooCommerce stores
+- Optimizing product metadata and descriptions for improved SEO
+- Automate tag management of products
 
-- Python 3.8+
-- WooCommerce store with API access
-- WooCommerce REST API credentials (URL, Consumer Key, Consumer Secret)
-- (Optional) [Docker](https://www.docker.com/) and [docker-compose](https://docs.docker.com/compose/)
+## Development Environment
 
-## Installation
+If you do not want to connect the MCP server to a real WordPress/WooCommerce instance, you can deploy a local development environment using Docker Compose. This allows you to test and develop against a simulated WooCommerce store without affecting your production data.
 
-### Using Docker (Recommended)
-
-1. **Clone the repository:**
-   ```bash
-   git clone <your-repo-url>
-   cd woocommerce-mcp
-   ```
-2. **Build the Docker image:**
-   ```bash
-   docker build -t woocommerce-mcp .
-   ```
-   This will create a Docker image named `woocommerce-mcp`.
-   You can verify the image was built successfully by running:
-   ```bash
-   docker images | grep woocommerce-mcp
-   ```
-
-You can now run the image directly with `docker run` or use it with Docker Compose as described below.
-
----
-
-### Alternative: Local Python Environment (For development/advanced users)
-
-1. **Install dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
-   Or use a virtual environment:
-   ```bash
-   python -m venv .venv
-   source .venv/bin/activate
-   pip install -r requirements.txt
-   ```
-
-## Configuration
-
-Set the following environment variables (e.g., in a `.env` file or your shell):
-
-```env
-WOOCOMMERCE_URL=https://yourstore.com
-WOOCOMMERCE_CONSUMER_KEY=ck_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-WOOCOMMERCE_CONSUMER_SECRET=cs_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-```
-
-You can use [python-dotenv](https://pypi.org/project/python-dotenv/) to load variables from a `.env` file automatically.
-
-## Usage
-
-### Run the MCP Server
-
-```bash
-python server.py
-```
-
-This will start the MCP server and register WooCommerce tools for use by compatible AI agents or clients.
-
-### Docker Compose
-
-You can deploy a test environment using the provided `docker-compose.yaml` file. This is useful if you want to experiment or run tests before connecting to a real WordPress website. The test environment simulates a WooCommerce store for development and testing purposes.
-
-The WordPress test environment will be available at http://localhost:3000 when running Docker Compose.
-
-A sample `docker-compose.yaml` is provided in the `infrastucture/` directory. To run with Docker Compose:
+A sample `docker-compose.yaml` is provided (typically in the `infrastucture/` directory) to quickly spin up a WordPress and WooCommerce environment. To start the environment:
 
 ```bash
 cd infrastucture
 docker-compose up
 ```
 
-## Available Tools
+The local WordPress site will be available at `http://localhost:3000` (or the port specified in your compose file). You can then use the MCP server with this local instance for safe development and testing.
 
-The following tools are available via the WooCommerce MCP server:
-
-1. `create_product`
-   - Create a new product in WooCommerce
-   - Inputs: `product` (dict): Product data
-   - Returns: Created product details
-
-2. `delete_product`
-   - Delete a product by its ID
-   - Inputs: `product_id` (int): Product ID
-   - Returns: Deletion result
-
-3. `get_products`
-   - List all products
-   - Inputs: None
-   - Returns: List of products
-
-4. `get_product_by_id`
-   - Get a product by its ID
-   - Inputs: `product_id` (int): Product ID
-   - Returns: Product details
-
-5. `update_product`
-   - Update a product by its ID
-   - Inputs: `product_id` (int): Product ID, `product` (dict): Product data
-   - Returns: Updated product details
-
-6. `get_product_tags`
-   - Retrieve tags for a product by its ID
-   - Inputs: `product_id` (int): Product ID
-   - Returns: List of tags
-
-7. `update_product_tag`
-   - Update a tag for a product by its ID
-   - Inputs: `product_id` (int): Product ID, `tag_id` (int): Tag ID, `tag` (dict): Tag data
-   - Returns: Updated tag details
-
-8. `get_product_categories`
-   - Retrieve categories for a product by its ID
-   - Inputs: `product_id` (int): Product ID
-   - Returns: List of categories
-
-9. `delete_product_tags`
-   - Delete a tag for a product by its ID
-   - Inputs: `tag_id` (int): Tag ID
-   - Returns: Deletion result
-
-10. `create_category`
-    - Create a new category
-    - Inputs: `category` (dict): Category data
-    - Returns: Created category details
-
-11. `list_all_reports`
-    - List all available reports
-    - Inputs: None
-    - Returns: List of reports
-
-12. `retrieve_sales_report`
-    - Retrieve sales report
-    - Inputs: None
-    - Returns: Sales report data
-
-13. `retrieve_top_sellers_report`
-    - Retrieve top sellers report (with optional filters)
-    - Inputs: `period` (str, optional), `date_min` (str, optional), `date_max` (str, optional)
-    - Returns: Top sellers report data
-
-14. `retrieve_customers_totals`
-    - Retrieve customers totals
-    - Inputs: None
-    - Returns: Customers totals data
-
-15. `retrieve_orders_totals`
-    - Retrieve orders totals
-    - Inputs: None
-    - Returns: Orders totals data
-
-16. `retrieve_products_totals`
-    - Retrieve products totals
-    - Inputs: None
-    - Returns: Products totals data
-
-17. `retrieve_reviews_totals`
-    - Retrieve reviews totals
-    - Inputs: None
-    - Returns: Reviews totals data
-
-18. `create_order`
-    - Create an order
-    - Inputs: `order` (dict): Order data
-    - Returns: Created order details
-
-19. `retrieve_order`
-    - Retrieve an order by its ID
-    - Inputs: `order_id` (int): Order ID
-    - Returns: Order details
-
-20. `list_all_orders`
-    - List all orders
-    - Inputs: None
-    - Returns: List of orders
-
-21. `update_order`
-    - Update an order by its ID
-    - Inputs: `order_id` (int): Order ID, `order` (dict): Order data
-    - Returns: Updated order details
-
-22. `delete_order`
-    - Delete an order by its ID
-    - Inputs: `order_id` (int): Order ID, `force` (bool, optional): Permanently delete
-    - Returns: Deletion result
-
-23. `batch_update_orders`
-    - Batch update orders
-    - Inputs: `orders` (dict): Orders batch data
-    - Returns: Batch update result
-
-24. `create_product_tag`
-    - Create a new product tag
-    - Inputs: `tag` (dict): Tag data
-    - Returns: Created tag details
-
-25. `get_product_tag_by_id`
-    - Retrieve a product tag by its ID
-    - Inputs: `tag_id` (int): Tag ID
-    - Returns: Tag details
-
-26. `list_all_product_tags`
-    - List all product tags
-    - Inputs: None
-    - Returns: List of product tags
-
-27. `update_product_tag_by_id`
-    - Update a product tag by its ID
-    - Inputs: `tag_id` (int): Tag ID, `tag` (dict): Tag data
-    - Returns: Updated tag details
-
-28. `batch_update_product_tags`
-    - Batch update product tags
-    - Inputs: `tags` (dict): Tags batch data
-    - Returns: Batch update result
-
-## Development
-
-- All main logic is in `server.py`.
-- No custom classes; all features are function-based.
-- Contributions are welcome! Please open issues or pull requests.
-
-## License
-
-This project is licensed under the terms of the MIT open source license. See [LICENSE](./LICENSE) for details.
-
-## Acknowledgments
-
-- Inspired by the [Model Context Protocol](https://modelcontextprotocol.io/)
-- Built with [woocommerce](https://pypi.org/project/woocommerce/) and [mcp-server](https://pypi.org/project/mcp-server/) 
+After starting the environment, install the WooCommerce plugin from the WordPress admin dashboard. Once WooCommerce is set up, you can begin testing and developing with the MCP server against your local store.
