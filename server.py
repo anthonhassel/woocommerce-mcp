@@ -1,5 +1,4 @@
 import os
-import requests
 from woocommerce import API
 from mcp.server.fastmcp import FastMCP
 
@@ -40,11 +39,12 @@ def delete_product(product_id: int):
 
 
 @mcp.tool()
-def get_products():
+def get_products(params: dict = None):
     """
-    List all products from Woocommerce
+    List all products from WooCommerce with optional query parameters.
+    :param params: Optional dictionary of query parameters (e.g., {'per_page': 20, 'page': 2, 'search': 'shirt'})
     """
-    products = wcapi.get("products")
+    products = wcapi.get("products", params=params or {})
     return str(products.json())
 
 
