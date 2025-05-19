@@ -4,3 +4,4 @@ mcp-server>=0.1.0
 mcp[cli]
 woocommerce
 python-dotenv>=1.0.0
+pycodestyle
