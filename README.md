@@ -21,7 +21,7 @@ You can easily run the WooCommerce MCP Server using Docker and connect it to an 
 
 ### 1. Clone the repository
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/anthonhassel/woocommerce-mcp
 cd woocommerce-mcp
 ```
 
