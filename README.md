@@ -87,6 +87,6 @@ cd infrastucture
 docker-compose up
 ```
 
-The local WordPress site will be available at `http://localhost:3000` (or the port specified in your compose file). You can then use the MCP server with this local instance for safe development and testing.
+The local WordPress site will be available at `http://localhost` (or the port specified in your compose file). You can then use the MCP server with this local instance for safe development and testing.
 
 After starting the environment, install the WooCommerce plugin from the WordPress admin dashboard. Once WooCommerce is set up, you can begin testing and developing with the MCP server against your local store.
